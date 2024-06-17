@@ -122,8 +122,11 @@ const Template_Card = fs.readFileSync(
 const Response = JSON.parse(data);
 
 const Server = http.createServer((request, response) => {
-  const Path = request.url;
-  if (Path === "/" || Path === "/Home") {
+  //console.log(request.url);
+  const { query, pathname } = url.parse(request.url, true);
+  //const Path = request.url;
+
+  if (pathname === "/" || pathname === "/Home") {
     response.writeHead(200, { "Content-type": "text/html" });
     const cardshtml = Response.map((item) =>
       replaceTemplate(Template_Card, item)
@@ -131,9 +134,12 @@ const Server = http.createServer((request, response) => {
     const output = Template_OverView.replace(/{%product_cards%}/g, cardshtml);
     response.end(output);
     //console.log(cardshtml);
-  } else if (Path === "/Products") {
-    response.end("This is the Products Page");
-  } else if (Path === "/API") {
+  } else if (pathname === "/Product") {
+    response.writeHead(200, { "Content-type": "text/html" });
+    const product = Response[query.id];
+    const output = replaceTemplate(Template_Product, product);
+    response.end(output);
+  } else if (pathname === "/API") {
     response.writeHead(200, { "Content-type": "application/json" });
     response.end(data);
     //response.end(JSON.stringify(Response)); same as the line above
