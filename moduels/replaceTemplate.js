@@ -16,3 +16,12 @@ const replaceTemplate = (temp, product) => {
 };
 
 module.exports = replaceTemplate;
+
+/**
+ * Explanation:
+Function Definition: replaceTemplate takes a template (temp) and a product object (product).
+String Replacement: The function uses replace to substitute placeholders 
+(like {%productName%}) in the template with actual product values.
+Conditional Replacement: If the product is not organic, it replaces {%not-organic%} with not-organic.
+Export: The function is exported so it can be used in other files.
+ */
