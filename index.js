@@ -3,6 +3,8 @@ const fs = require("fs"); //same thing
 const http = require("http");
 const url = require("url");
 const replaceTemplate = require("./moduels/replaceTemplate");
+const Slugify = require("slugify");
+const { default: slugify } = require("slugify");
 
 /////////////////////////////////////////////WEB API ////////////////////////////////////
 
@@ -29,6 +31,12 @@ Parsing Data: Parsing the JSON data into a JavaScript object.
  */
 
 ////////////////////////////CREATING THE SERVER////////////////////////////////////
+const SLUGS = Response.map((item) =>
+  slugify(item.productName, { lower: true, replacement: "&" })
+);
+console.log(SLUGS);
+//console.log(slugify("Hello World", { lower: true }));
+
 const Server = http.createServer((request, response) => {
   //console.log(request.url);
   const { query, pathname } = url.parse(request.url, true);
